@@ -1,9 +1,8 @@
-import api, { route, assumeTrustedRoute } from "@forge/api";
-
+import {requestConfluence} from "@forge/bridge";
 import { spacesCache, navStack } from './storage';
 
 export const fetchBlogPosts = async (nextLink, back) => {
-
+/*
     let ourRoute;
 
     if (back) {
@@ -16,11 +15,10 @@ export const fetchBlogPosts = async (nextLink, back) => {
             navStack.push(`/wiki/api/v2/blogposts?sort=-created-date&limit=10`);
             ourRoute = route`/wiki/api/v2/blogposts?sort=-created-date&limit=10`;
         }
-    }
+    }*/
 
-    const res = await api
-        .asUser()
-        .requestConfluence(ourRoute, {
+    const res = await
+        requestConfluence(`/wiki/api/v2/blogposts?sort=-created-date&limit=6`, {
             headers: {
                 'Accept': 'application/json'
             }
@@ -35,9 +33,8 @@ export const fetchBlogSpace = async (spaceId) => {
     if (spacesCache[spaceId])
         return spacesCache[spaceId];
 
-    const res = await api
-        .asUser()
-        .requestConfluence(route`/wiki/api/v2/spaces/${spaceId}`, {
+    const res = await
+        requestConfluence(`/wiki/api/v2/spaces/${spaceId}`, {
             headers: {
                 'Accept': 'application/json'
             }
@@ -51,9 +48,8 @@ export const fetchBlogSpace = async (spaceId) => {
 };
 
 export const fetchBlogImage = async (blogId) => {
-    const res = await api
-        .asUser()
-        .requestConfluence(route`/wiki/api/v2/blogposts/${blogId}/properties?key=cover-picture-id-published`, {
+    const res = await
+        requestConfluence(`/wiki/api/v2/blogposts/${blogId}/properties?key=cover-picture-id-published`, {
             headers: {
                 'Accept': 'application/json'
             }
@@ -75,9 +71,7 @@ export const fetchBlogImage = async (blogId) => {
 };
 
 export const fetchBlogImageInternalId = async (blogId, fileId) => {
-    const res = await api
-        .asUser()
-        .requestConfluence(route`/wiki/api/v2/blogposts/${blogId}/attachments`, {
+    const res = await requestConfluence(`/wiki/api/v2/blogposts/${blogId}/attachments`, {
             headers: {
                 'Accept': 'application/json'
             }
@@ -85,6 +79,6 @@ export const fetchBlogImageInternalId = async (blogId, fileId) => {
 
     const data = await res.json();
 
-    return '/wiki' + data.results.find(x => x.fileId == fileId).downloadLink;
+    return 'https://brandad-wiki.atlassian.net/wiki' + data.results.find(x => x.fileId == fileId).downloadLink;
 
 };

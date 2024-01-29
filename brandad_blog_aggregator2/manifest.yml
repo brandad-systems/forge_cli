@@ -1,0 +1,24 @@
+modules:
+  macro:
+    - key: brandad-blog-aggregator2-hello-world-macro
+      resource: main
+      render: native
+      resolver:
+        function: resolver
+      title: brandad_blog_aggregator2
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: src/frontend/index.jsx
+app:
+  id: ari:cloud:ecosystem::app/d7465b14-9fa8-43b4-97ca-5689e2ccd8a0
+permissions:
+  scopes:
+    - read:page:confluence
+    - read:space:confluence
+    - read:attachment:confluence
+  external:
+    images:
+      - '*'

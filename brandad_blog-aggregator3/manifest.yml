@@ -1,0 +1,28 @@
+modules:
+  macro:
+    - key: brandad-blog-aggregator3-hello-world
+      resource: main
+      resolver:
+        function: resolver
+      title: brandad_blog-aggregator3
+      description: Inserts Hello world!
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: static/hello-world/build
+app:
+  id: ari:cloud:ecosystem::app/c744d0b5-2814-4aa7-adb3-7cb429acd441
+permissions:
+  scopes:
+    - read:page:confluence
+    - read:space:confluence
+    - read:attachment:confluence
+    - manage:confluence-configuration
+  external:
+    images:
+      - '*'
+  content:
+    styles:
+      - 'unsafe-inline'
